@@ -1,0 +1,16 @@
+{
+  "name": "@cfn-modules/rds-postgres",
+  "version": "0.0.1",
+  "description": "RDS PostgreSQL with secure firewall configuration, encryption, multi AZ, backup enabled, and alerting",
+  "author": "Michael Wittig <michael@widdix.de>",
+  "license": "Apache-2.0",
+  "keywords": ["cfn-modules", "cfn-modules:Bastion"],
+  "homepage": "https://github.com/cfn-modules",
+  "bugs": {
+    "url": "https://github.com/cfn-modules/rds-postgres/issues"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/cfn-modules/rds-postgres.git"
+  }
+}
