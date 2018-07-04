@@ -80,241 +80,44 @@ Parameters:
     Description: 'Name that is used to create the DNS entry with trailing dot, e.g. ${SubDomainNameWithDot}${HostedZoneName}. Leave blank for naked (or apex and bare) domain. Requires HostedZoneModule parameter!'
     Type: String
     Default: 'postgres.'
-Conditions:
-  HasAlertingModule: !Not [!Equals [!Ref AlertingModule, '']]
-  HasHostedZoneModule: !Not [!Equals [!Ref HostedZoneModule, '']]
-  HasBastionModule: !Not [!Equals [!Ref BastionModule, '']]
-  HasKmsKeyModule: !Not [!Equals [!Ref KmsKeyModule, '']]
-  HasDBSnapshotIdentifier: !Not [!Equals [!Ref DBSnapshotIdentifier, '']]
-  HasKmsKeyModuleAndNotDBSnapshotIdentifier: !And [!Condition HasKmsKeyModule, !Not [!Condition HasDBSnapshotIdentifier]]
 Resources:
-  RecordSet:
-    Condition: HasHostedZoneModule
-    Type: 'AWS::Route53::RecordSet'
+  Instance:
+    Type: 'AWS::CloudFormation::Stack'
     Properties:
-      HostedZoneId:
-        'Fn::ImportValue': !Sub '${HostedZoneModule}-Id'
-      Name: !Sub
-      - '${SubDomainNameWithDot}${HostedZoneName}'
-      - SubDomainNameWithDot: !Ref SubDomainNameWithDot
-        HostedZoneName:
-          'Fn::ImportValue': !Sub '${HostedZoneModule}-Name'
-      ResourceRecords:
-      - !GetAtt 'DBInstance.Endpoint.Address'
-      TTL: '60'
-      Type: CNAME
-  SecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-      GroupDescription: !Ref 'AWS::StackName'
-      VpcId:
-        'Fn::ImportValue': !Sub '${VpcModule}-Id'
-      SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: 5432
-        ToPort: 5432
-        SourceSecurityGroupId: {'Fn::ImportValue': !Sub '${ClientSgModule}-SecurityGroupId'}
-  SecurityGroupInPostgresBastion:
-    Type: 'AWS::EC2::SecurityGroupIngress'
-    Condition: HasBastionModule
-    Properties:
-      GroupId: !Ref SecurityGroup
-      IpProtocol: tcp
-      FromPort: 5432
-      ToPort: 5432
-      SourceSecurityGroupId: {'Fn::ImportValue': !Sub '${BastionModule}-SecurityGroupId'}
-  DBSubnetGroup:
-    Type: 'AWS::RDS::DBSubnetGroup'
-    Properties:
-      DBSubnetGroupDescription: !Ref 'AWS::StackName'
-      SubnetIds: !Split [',', {'Fn::ImportValue': !Sub '${VpcModule}-SubnetIdsPrivate'}]
-  DBInstance:
-    Type: 'AWS::RDS::DBInstance'
-    Properties:
-      AllocatedStorage: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBAllocatedStorage]
-      AllowMajorVersionUpgrade: false
-      AutoMinorVersionUpgrade: true
-      BackupRetentionPeriod: !Ref DBBackupRetentionPeriod
-      CopyTagsToSnapshot: true
-      DBInstanceClass: !Ref DBInstanceClass
-      DBName: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBName]
-      DBSnapshotIdentifier: !If [HasDBSnapshotIdentifier, !Ref DBSnapshotIdentifier, !Ref 'AWS::NoValue']
-      DBSubnetGroupName: !Ref DBSubnetGroup
-      Engine: postgres
-      EngineVersion: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', '9.6.8']
-      KmsKeyId: !If [HasKmsKeyModuleAndNotDBSnapshotIdentifier, {'Fn::ImportValue': !Sub '${KmsKeyModule}-Arn'}, !Ref 'AWS::NoValue']
-      MasterUsername: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBMasterUsername]
-      MasterUserPassword: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBMasterUserPassword]
-      MultiAZ: !Ref DBMultiAZ
-      PreferredBackupWindow: '09:54-10:24'
-      PreferredMaintenanceWindow: 'sat:07:00-sat:07:30'
-      StorageType: gp2
-      StorageEncrypted: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !If [HasKmsKeyModule, true, false]]
-      VPCSecurityGroups:
-      - !Ref SecurityGroup
-  AlarmBurstBalanceTooLow:
-    Condition: HasAlertingModule
-    Type: 'AWS::CloudWatch::Alarm'
-    Properties:
-      AlarmActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      AlarmDescription: 'Average database storage burst balance over last 10 minutes too low, expect a significant performance drop soon.'
-      ComparisonOperator: LessThanThreshold
-      Dimensions:
-      - Name: DBInstanceIdentifier
-        Value: !Ref DBInstance
-      EvaluationPeriods: 1
-      MetricName: BurstBalance
-      Namespace: 'AWS/RDS'
-      OKActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      Period: 600
-      Statistic: Average
-      Threshold: 20
-  AlarmCPUUtilizationTooHigh:
-    Condition: HasAlertingModule
-    Type: 'AWS::CloudWatch::Alarm'
-    Properties:
-      AlarmActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      AlarmDescription: 'Average database CPU utilization over last 10 minutes too high.'
-      ComparisonOperator: GreaterThanThreshold
-      Dimensions:
-      - Name: DBInstanceIdentifier
-        Value: !Ref DBInstance
-      EvaluationPeriods: 1
-      MetricName: CPUUtilization
-      Namespace: 'AWS/RDS'
-      OKActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      Period: 600
-      Statistic: Average
-      Threshold: 80
-  AlarmCPUCreditBalanceTooLow:
-    Condition: HasAlertingModule
-    Type: 'AWS::CloudWatch::Alarm'
-    Properties:
-      AlarmActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      AlarmDescription: 'Average database CPU credit balance over last 10 minutes too low, expect a significant performance drop soon.'
-      ComparisonOperator: LessThanThreshold
-      Dimensions:
-      - Name: DBInstanceIdentifier
-        Value: !Ref DBInstance
-      EvaluationPeriods: 1
-      MetricName: CPUCreditBalance
-      Namespace: 'AWS/RDS'
-      OKActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      Period: 600
-      Statistic: Average
-      Threshold: 20
-  AlarmDiskQueueDepthTooHigh:
-    Condition: HasAlertingModule
-    Type: 'AWS::CloudWatch::Alarm'
-    Properties:
-      AlarmActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      AlarmDescription: 'Average database disk queue depth over last 10 minutes too high, performance may suffer.'
-      ComparisonOperator: GreaterThanThreshold
-      Dimensions:
-      - Name: DBInstanceIdentifier
-        Value: !Ref DBInstance
-      EvaluationPeriods: 1
-      MetricName: DiskQueueDepth
-      Namespace: 'AWS/RDS'
-      OKActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      Period: 600
-      Statistic: Average
-      Threshold: 64
-  AlarmFreeableMemoryTooLow:
-    Condition: HasAlertingModule
-    Type: 'AWS::CloudWatch::Alarm'
-    Properties:
-      AlarmActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      AlarmDescription: 'Average database freeable memory over last 10 minutes too low, performance may suffer.'
-      ComparisonOperator: LessThanThreshold
-      Dimensions:
-      - Name: DBInstanceIdentifier
-        Value: !Ref DBInstance
-      EvaluationPeriods: 1
-      MetricName: FreeableMemory
-      Namespace: 'AWS/RDS'
-      OKActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      Period: 600
-      Statistic: Average
-      Threshold: 64000000 # 64 Megabyte in Byte
-  AlarmFreeStorageSpaceTooLow:
-    Condition: HasAlertingModule
-    Type: 'AWS::CloudWatch::Alarm'
-    Properties:
-      AlarmActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      AlarmDescription: 'Average database free storage space over last 10 minutes too low.'
-      ComparisonOperator: LessThanThreshold
-      Dimensions:
-      - Name: DBInstanceIdentifier
-        Value: !Ref DBInstance
-      EvaluationPeriods: 1
-      MetricName: FreeStorageSpace
-      Namespace: 'AWS/RDS'
-      OKActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      Period: 600
-      Statistic: Average
-      Threshold: 2000000000 # 2 Gigabyte in Byte
-  AlarmSwapUsageTooHigh:
-    Condition: HasAlertingModule
-    Type: 'AWS::CloudWatch::Alarm'
-    Properties:
-      AlarmActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      AlarmDescription: 'Average database swap usage over last 10 minutes too high, performance may suffer.'
-      ComparisonOperator: GreaterThanThreshold
-      Dimensions:
-      - Name: DBInstanceIdentifier
-        Value: !Ref DBInstance
-      EvaluationPeriods: 1
-      MetricName: SwapUsage
-      Namespace: 'AWS/RDS'
-      OKActions:
-      - 'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      Period: 600
-      Statistic: Average
-      Threshold: 256000000 # 256 Megabyte in Byte
-  EventSubscription:
-    Condition: HasAlertingModule
-    Type: 'AWS::RDS::EventSubscription'
-    Properties:
-      EventCategories:
-      - failover
-      - failure
-      - 'low storage'
-      - maintenance
-      - notification
-      - recovery
-      SnsTopicArn:
-        'Fn::ImportValue': !Sub '${AlertingModule}-Arn'
-      SourceIds:
-      - !Ref DBInstance
-      SourceType: 'db-instance'
+      Parameters:
+        VpcModule: !Ref VpcModule
+        ClientSgModule: !Ref ClientSgModule
+        AlertingModule: !Ref AlertingModule
+        HostedZoneModule: !Ref HostedZoneModule
+        BastionModule: !Ref BastionModule
+        KmsKeyModule: !Ref KmsKeyModule
+        Engine: postgres
+        EngineVersion: '9.6.8'
+        EnginePort: '5432'
+        DBSnapshotIdentifier: !Ref DBSnapshotIdentifier
+        DBAllocatedStorage: !Ref DBAllocatedStorage
+        DBInstanceClass: !Ref DBInstanceClass
+        DBName: !Ref DBName
+        DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
+        DBMasterUsername: !Ref DBMasterUsername
+        DBMasterUserPassword: !Ref DBMasterUserPassword
+        DBMultiAZ: !Ref DBMultiAZ
+        SubDomainNameWithDot: !Ref SubDomainNameWithDot
+      TemplateURL: '../rds-instance/module.yml'
 Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '0.0.2'
+    Value: '0.0.3'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:
     Description: 'The name of the database instance.'
-    Value: !Ref DBInstance
+    Value: !GetAtt 'Instance.Outputs.Name'
     Export:
       Name: !Sub '${AWS::StackName}-Name'
   DnsName:
     Description: 'The connection endpoint for the database.'
-    Value: !GetAtt 'DBInstance.Endpoint.Address'
+    Value: !GetAtt 'Instance.Outputs.DnsName'
     Export:
       Name: !Sub '${AWS::StackName}-DnsName'
