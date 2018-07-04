@@ -141,7 +141,7 @@ Resources:
       DBSnapshotIdentifier: !If [HasDBSnapshotIdentifier, !Ref DBSnapshotIdentifier, !Ref 'AWS::NoValue']
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: postgres
-      EngineVersion: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', '9.6.5']
+      EngineVersion: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', '9.6.8']
       KmsKeyId: !If [HasKmsKeyModuleAndNotDBSnapshotIdentifier, {'Fn::ImportValue': !Sub '${KmsKeyModule}-Arn'}, !Ref 'AWS::NoValue']
       MasterUsername: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBMasterUsername]
       MasterUserPassword: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBMasterUserPassword]
@@ -305,7 +305,7 @@ Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '0.0.1'
+    Value: '0.0.2'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:
