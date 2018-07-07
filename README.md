@@ -167,3 +167,7 @@ Resources:
     </tr>
   </tbody>
 </table>
+
+## Limitations
+
+* Scalable: RDS instances capacity (CPU, RAM, network, ...) is limited by design
