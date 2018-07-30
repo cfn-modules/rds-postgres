@@ -103,12 +103,12 @@ Resources:
         DBMasterUserPassword: !Ref DBMasterUserPassword
         DBMultiAZ: !Ref DBMultiAZ
         SubDomainNameWithDot: !Ref SubDomainNameWithDot
-      TemplateURL: '../rds-instance/module.yml'
+      TemplateURL: './node_modules/@cfn-modules/rds-instance/module.yml'
 Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '0.0.3'
+    Value: '0.0.4'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:
