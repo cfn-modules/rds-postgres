@@ -20,24 +20,24 @@ npm i @cfn-modules/rds-postgres
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'cfn-modules example'
 Resources:
-  Function:
+  Database:
     Type: 'AWS::CloudFormation::Stack'
     Properties:
       Parameters:
         VpcModule: !GetAtt 'Vpc.Outputs.StackName' # required
-        ClientSgModule: !GetAtt 'Client.Outputs.StackName' # required
+        ClientSgModule: !GetAtt 'ClientSg.Outputs.StackName' # required
         AlertingModule: '' # optional
         HostedZoneModule: '' # optional
         BastionModule: '' # optional
         KmsKeyModule: '' # optional
         DBSnapshotIdentifier: '' # optional
-        DBAllocatedStorage: 5 # optional
+        DBAllocatedStorage: '5' # optional
         DBInstanceClass: 'db.t2.micro' # optional
         DBName: '' # optional
-        DBBackupRetentionPeriod: 30 # optional
+        DBBackupRetentionPeriod: '30' # optional
         DBMasterUsername: 'master' # optional
         DBMasterUserPassword: '' # required if DBSnapshotIdentifier is not set
-        DBMultiAZ: true # optional
+        DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
 ```
