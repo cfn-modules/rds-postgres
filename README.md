@@ -163,7 +163,7 @@ Resources:
     </tr>
     <tr>
       <td>SubDomainNameWithDot</td>
-      <td>Name that is used to create the DNS entry with trailing dot, e.g. ${SubDomainNameWithDot}${HostedZoneName}. Leave blank for naked (or apex and bare) domain. Requires HostedZoneModule parameter!</td>
+      <td>Name that is used to create the DNS entry with trailing dot, e.g. §{SubDomainNameWithDot}§{HostedZoneName}. Leave blank for naked (or apex and bare) domain. Requires HostedZoneModule parameter!</td>
       <td>test.</td>
       <td>no</td>
       <td></td>
