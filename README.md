@@ -66,7 +66,7 @@ Resources:
       <td>ClientSgModule</td>
       <td>Stack name of <a href="https://www.npmjs.com/package/@cfn-modules/client-sg">client-sg module</a> where traffic is allowed from on port 5432 to the database</td>
       <td></td>
-      <td>no</td>
+      <td>yes</td>
       <td></td>
     </tr>
     <tr>
@@ -86,13 +86,6 @@ Resources:
     <tr>
       <td>BastionModule</td>
       <td>Stack name of <a href="https://www.npmjs.com/search?q=keywords:cfn-modules:Bastion">module implementing Bastion</a></td>
-      <td></td>
-      <td>no</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>HostedZoneModule</td>
-      <td>Stack name of <a href="https://www.npmjs.com/search?q=keywords:cfn-modules:HostedZone">module implementing HostedZone</a></td>
       <td></td>
       <td>no</td>
       <td></td>
