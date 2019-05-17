@@ -80,6 +80,11 @@ Parameters:
     Description: 'Name that is used to create the DNS entry with trailing dot, e.g. §{SubDomainNameWithDot}§{HostedZoneName}. Leave blank for naked (or apex and bare) domain. Requires HostedZoneModule parameter!'
     Type: String
     Default: 'postgres.'
+  EngineVersion:
+    Description: 'PostgreSQL version.'
+    Type: String
+    Default: '9.6.8'
+    AllowedValues: ['11.2', '11.1', '10.7', '10.6', '10.5', '10.4', '10.3', '10.1', '9.6.12', '9.6.8', '9.5.16', '9.4.21', '9.3.25'] # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
 Resources:
   Instance:
     Type: 'AWS::CloudFormation::Stack'
@@ -92,7 +97,7 @@ Resources:
         BastionModule: !Ref BastionModule
         KmsKeyModule: !Ref KmsKeyModule
         Engine: postgres
-        EngineVersion: '9.6.8'
+        EngineVersion: !Ref EngineVersion
         EnginePort: '5432'
         DBSnapshotIdentifier: !Ref DBSnapshotIdentifier
         DBAllocatedStorage: !Ref DBAllocatedStorage
@@ -108,7 +113,7 @@ Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '1.1.0'
+    Value: '1.2.0'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:

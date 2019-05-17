@@ -39,6 +39,7 @@ Resources:
         DBMasterUserPassword: '' # required if DBSnapshotIdentifier is not set
         DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
+        EngineVersion: '9.6.8'
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
 ```
 
@@ -160,6 +161,13 @@ Resources:
       <td>test.</td>
       <td>no</td>
       <td></td>
+    </tr>
+    <tr>
+      <td>EngineVersion</td>
+      <td>PostgreSQL version</td>
+      <td>9.6.8</td>
+      <td>no</td>
+      <td>['11.2', '11.1', '10.7', '10.6', '10.5', '10.4', '10.3', '10.1', '9.6.12', '9.6.8']</td>
     </tr>
   </tbody>
 </table>
