@@ -84,7 +84,7 @@ Parameters:
     Description: 'PostgreSQL version.'
     Type: String
     Default: '9.6.8'
-    AllowedValues: ['11.2', '11.1', '10.7', '10.6', '10.5', '10.4', '10.3', '10.1', '9.6.12', 9.6.8']
+    AllowedValues: ['11.2', '11.1', '10.7', '10.6', '10.5', '10.4', '10.3', '10.1', '9.6.12', '9.6.8']
 Resources:
   Instance:
     Type: 'AWS::CloudFormation::Stack'
