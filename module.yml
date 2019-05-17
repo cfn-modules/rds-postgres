@@ -84,7 +84,7 @@ Parameters:
     Description: 'PostgreSQL version.'
     Type: String
     Default: '9.6.8'
-    AllowedValues: ['11.2', '11.1', '10.7', '10.6', '10.5', '10.4', '10.3', '10.1', '9.6.12', '9.6.8']
+    AllowedValues: ['11.2', '11.1', '10.7', '10.6', '10.5', '10.4', '10.3', '10.1', '9.6.12', '9.6.8', '9.5.16', '9.4.21', '9.3.25'] # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
 Resources:
   Instance:
     Type: 'AWS::CloudFormation::Stack'
