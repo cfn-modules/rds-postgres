@@ -39,7 +39,8 @@ Resources:
         DBMasterUserPassword: '' # required if DBSnapshotIdentifier is not set
         DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
-        EngineVersion: '9.6.8'
+        EngineVersion: '9.6.8' # set this to the latest available version when launching!
+        EnableIAMDatabaseAuthentication: 'false' # optional
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
 ```
 
@@ -177,6 +178,13 @@ Resources:
       <td>9.6.8</td>
       <td>no</td>
       <td>['11.2', '11.1', '10.7', '10.6', '10.5', '10.4', '10.3', '10.1', '9.6.12', '9.6.8']</td>
+    </tr>
+    <tr>
+      <td>EnableIAMDatabaseAuthentication</td>
+      <td>Enable <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html">mapping of AWS Identity and Access Management (IAM) accounts to database accounts</a>).</td>
+      <td>true</td>
+      <td>no</td>
+      <td>[true, false]</td>
     </tr>
   </tbody>
 </table>
