@@ -40,7 +40,7 @@ Resources:
         DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
         EngineVersion: '9.6.8' # set this to the latest available version when launching!
-        EnableIAMDatabaseAuthentication: 'false' # optional
+        EnableIAMDatabaseAuthentication: 'true' # optional
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
 ```
 
