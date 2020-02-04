@@ -40,7 +40,7 @@ Resources:
         DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
         EngineVersion: '9.6.8' # set this to the latest available version when launching!
-        EnableIAMDatabaseAuthentication: 'true' # optional
+        EnableIAMDatabaseAuthentication: 'false' # optional
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
 ```
 
@@ -182,7 +182,7 @@ Resources:
     <tr>
       <td>EnableIAMDatabaseAuthentication</td>
       <td>Enable <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html">mapping of AWS Identity and Access Management (IAM) accounts to database accounts</a>).</td>
-      <td>true</td>
+      <td>false</td>
       <td>no</td>
       <td>[true, false]</td>
     </tr>
