@@ -22,7 +22,7 @@ Resources:
     Properties:
       Parameters:
         VpcModule: !GetAtt 'Vpc.Outputs.StackName'
-        ClientSgModule: !GetAtt 'ClientSg.Outputs.StackName' 
+        ClientSgModule: !GetAtt 'ClientSg.Outputs.StackName'
         DBMasterUserPassword: 'test1234'
         EngineVersion: '11.2'
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
