@@ -1,6 +1,3 @@
-[![Build Status](https://travis-ci.org/cfn-modules/rds-postgres.svg?branch=master)](https://travis-ci.org/cfn-modules/rds-postgres)
-[![NPM version](https://img.shields.io/npm/v/@cfn-modules/rds-postgres.svg)](https://www.npmjs.com/package/@cfn-modules/rds-postgres)
-
 # cfn-modules: RDS PostgreSQL
 
 RDS PostgreSQL database with secure firewall configuration, [encryption](https://www.npmjs.com/package/@cfn-modules/kms-key), multi AZ, backup enabled, and [alerting](https://www.npmjs.com/package/@cfn-modules/alerting).
