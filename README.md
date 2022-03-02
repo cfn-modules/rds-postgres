@@ -12,7 +12,7 @@ npm i @cfn-modules/rds-postgres
 
 ## Usage
 
-```
+```yaml
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'cfn-modules example'
@@ -179,7 +179,7 @@ Resources:
       <td>
         set this to the version of PostgreSQL you want to use.
         You can run the following command to get the list of PostgreSQL versions supported by AWS RDS:<br />
-        `aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"`
+        <code>aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"</code>
       </td>
     </tr>
     <tr>
