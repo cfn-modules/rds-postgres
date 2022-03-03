@@ -12,7 +12,7 @@ npm i @cfn-modules/rds-postgres
 
 ## Usage
 
-```
+```yaml
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'cfn-modules example'
@@ -36,7 +36,9 @@ Resources:
         DBMasterUserPassword: '' # required if DBSnapshotIdentifier is not set
         DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
-        EngineVersion: '9.6.8' # set this to the latest available version when launching!
+        # set this to the latest available version when launching!  Use command below to get list of engineversions available in AWS.
+        # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
+        EngineVersion: '9.6.8'
         EnableIAMDatabaseAuthentication: 'false' # optional
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
 ```
@@ -174,7 +176,11 @@ Resources:
       <td>PostgreSQL version</td>
       <td>9.6.8</td>
       <td>no</td>
-      <td>['11.2', '11.1', '10.7', '10.6', '10.5', '10.4', '10.3', '10.1', '9.6.12', '9.6.8']</td>
+      <td>
+        set this to the version of PostgreSQL you want to use.
+        You can run the following command to get the list of PostgreSQL versions supported by AWS RDS:<br />
+        <code>aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"</code>
+      </td>
     </tr>
     <tr>
       <td>EnableIAMDatabaseAuthentication</td>
