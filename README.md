@@ -36,7 +36,8 @@ Resources:
         DBMasterUserPassword: '' # required if DBSnapshotIdentifier is not set
         DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
-        # set this to the latest available version when launching!  Use command below to get list of engineversions available in AWS.
+        # Set this to the version of PostgreSQL you want to use.
+        # You can run the following command to get the list of PostgreSQL versions supported by AWS RDS:
         # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
         EngineVersion: '9.6.8'
         EnableIAMDatabaseAuthentication: 'false' # optional
@@ -177,8 +178,7 @@ Resources:
       <td>9.6.8</td>
       <td>no</td>
       <td>
-        set this to the version of PostgreSQL you want to use.
-        You can run the following command to get the list of PostgreSQL versions supported by AWS RDS:<br />
+        Set this to the version of PostgreSQL you want to use. You can run the following command to get the list of PostgreSQL versions supported by AWS RDS:<br />
         <code>aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"</code>
       </td>
     </tr>
