@@ -34,7 +34,7 @@ Resources:
         DBName: '' # optional
         DBBackupRetentionPeriod: '30' # optional
         DBMasterUsername: 'master' # optional
-        DBMasterUserPassword: '' # required neither DBSnapshotIdentifier nor SecretModule is set
+        DBMasterUserPassword: '' # required if neither DBSnapshotIdentifier nor SecretModule is set
         DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
         # Set this to the version of PostgreSQL you want to use.
