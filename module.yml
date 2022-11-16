@@ -38,6 +38,10 @@ Parameters:
     Description: 'Optional but recommended stack name of kms-key module (ignored when DBSnapshotIdentifier is set, value used from snapshot).'
     Type: String
     Default: ''
+  SecretModule:
+    Description: 'Optional but recommended stack name of secret module.'
+    Type: String
+    Default: ''
   DBSnapshotIdentifier:
     Description: 'Optional name or Amazon Resource Name (ARN) of the DB snapshot from which you want to restore (leave blank to create an empty database).'
     Type: String
@@ -51,7 +55,7 @@ Parameters:
   DBInstanceClass:
     Description: 'The instance type of the database.'
     Type: String
-    Default: 'db.t2.micro'
+    Default: 'db.t4g.micro'
   DBName:
     Description: 'Name of the database (ignored when DBSnapshotIdentifier is set, value used from snapshot).'
     Type: String
@@ -67,7 +71,7 @@ Parameters:
     Type: String
     Default: master
   DBMasterUserPassword:
-    Description: 'The master password for the DB instance (ignored when DBSnapshotIdentifier is set, value used from snapshot).'
+    Description: 'The master password for the DB instance (ignored when DBSnapshotIdentifier is set, value used from snapshot; also ignored if SecretModule is set).'
     Type: String
     NoEcho: true
     Default: ''
@@ -81,9 +85,8 @@ Parameters:
     Type: String
     Default: 'postgres.'
   EngineVersion:
-    Description: 'PostgreSQL version.'
+    Description: 'PostgreSQL version (e.g., 14.5).' # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
     Type: String
-    Default: '9.6.8' # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
   EnableIAMDatabaseAuthentication:
     Description: 'Enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html).'
     Type: String
@@ -100,6 +103,7 @@ Resources:
         HostedZoneModule: !Ref HostedZoneModule
         BastionModule: !Ref BastionModule
         KmsKeyModule: !Ref KmsKeyModule
+        SecretModule: !Ref SecretModule
         Engine: postgres
         EngineVersion: !Ref EngineVersion
         EnginePort: '5432'
@@ -118,7 +122,7 @@ Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '1.4.0'
+    Value: '2.0.0'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:
