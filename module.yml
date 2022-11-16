@@ -55,7 +55,7 @@ Parameters:
   DBInstanceClass:
     Description: 'The instance type of the database.'
     Type: String
-    Default: 'db.t2.micro'
+    Default: 'db.t4g.micro'
   DBName:
     Description: 'Name of the database (ignored when DBSnapshotIdentifier is set, value used from snapshot).'
     Type: String
