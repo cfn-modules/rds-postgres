@@ -85,9 +85,8 @@ Parameters:
     Type: String
     Default: 'postgres.'
   EngineVersion:
-    Description: 'PostgreSQL version.'
+    Description: 'PostgreSQL version (e.g., 14.5).' # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
     Type: String
-    Default: '9.6.8' # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
   EnableIAMDatabaseAuthentication:
     Description: 'Enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html).'
     Type: String
@@ -123,7 +122,7 @@ Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '1.5.0'
+    Value: '2.0.0'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:
