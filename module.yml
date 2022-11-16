@@ -38,6 +38,10 @@ Parameters:
     Description: 'Optional but recommended stack name of kms-key module (ignored when DBSnapshotIdentifier is set, value used from snapshot).'
     Type: String
     Default: ''
+  SecretModule:
+    Description: 'Optional but recommended stack name of secret module.'
+    Type: String
+    Default: ''
   DBSnapshotIdentifier:
     Description: 'Optional name or Amazon Resource Name (ARN) of the DB snapshot from which you want to restore (leave blank to create an empty database).'
     Type: String
@@ -67,7 +71,7 @@ Parameters:
     Type: String
     Default: master
   DBMasterUserPassword:
-    Description: 'The master password for the DB instance (ignored when DBSnapshotIdentifier is set, value used from snapshot).'
+    Description: 'The master password for the DB instance (ignored when DBSnapshotIdentifier is set, value used from snapshot; also ignored if SecretModule is set).'
     Type: String
     NoEcho: true
     Default: ''
@@ -100,6 +104,7 @@ Resources:
         HostedZoneModule: !Ref HostedZoneModule
         BastionModule: !Ref BastionModule
         KmsKeyModule: !Ref KmsKeyModule
+        SecretModule: !Ref SecretModule
         Engine: postgres
         EngineVersion: !Ref EngineVersion
         EnginePort: '5432'
@@ -118,7 +123,7 @@ Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '1.4.0'
+    Value: '1.5.0'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:
