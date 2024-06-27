@@ -26,5 +26,5 @@ Resources:
         DBBackupRetentionPeriod: '0'
         DBMasterUserPassword: 'test1234'
         DBMultiAZ: 'false'
-        EngineVersion: '14.5'
+        EngineVersion: '14.12'
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
