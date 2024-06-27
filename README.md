@@ -41,7 +41,7 @@ Resources:
         # Set this to the version of PostgreSQL you want to use.
         # You can run the following command to get the list of PostgreSQL versions supported by AWS RDS:
         # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
-        EngineVersion: '14.5'
+        EngineVersion: '14.12'
         EnableIAMDatabaseAuthentication: 'false' # optional
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
 ```
