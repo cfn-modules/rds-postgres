@@ -1,6 +1,6 @@
 {
   "name": "@cfn-modules/rds-postgres",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "RDS PostgreSQL database with secure firewall configuration, encryption, multi AZ, backup enabled, and alerting",
   "author": "Michael Wittig <michael@widdix.de>",
   "license": "Apache-2.0",
