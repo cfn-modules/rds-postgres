@@ -25,5 +25,5 @@ Resources:
         ClientSgModule: !GetAtt 'ClientSg.Outputs.StackName'
         DBMasterUserPassword: 'test1234'
         ParameterGroupName: 'default.postgres14' # using default parameter
-        EngineVersion: '14.5'
+        EngineVersion: '14.12'
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
