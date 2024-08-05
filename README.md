@@ -37,6 +37,7 @@ Resources:
         DBMasterUserPassword: '' # required if neither DBSnapshotIdentifier nor SecretModule is set
         DBMultiAZ: 'true' # optional
         SubDomainNameWithDot: 'postgres.' # optional
+        ParameterGroupName: '' #optional
         # Set this to the version of PostgreSQL you want to use.
         # You can run the following command to get the list of PostgreSQL versions supported by AWS RDS:
         # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
@@ -177,6 +178,13 @@ Resources:
       <td>SubDomainNameWithDot</td>
       <td>Name that is used to create the DNS entry with trailing dot, e.g. §{SubDomainNameWithDot}§{HostedZoneName}. Leave blank for naked (or apex and bare) domain. Requires HostedZoneModule parameter!</td>
       <td>test.</td>
+      <td>no</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>ParameterGroupName</td>
+      <td>parameter group that contains configuration settings for the database engine you're using</td>
+      <td></td>
       <td>no</td>
       <td></td>
     </tr>
