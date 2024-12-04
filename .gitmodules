@@ -1,3 +1,0 @@
-[submodule "node_modules/@cfn-modules/rds-instance"]
-	path = node_modules/@cfn-modules/rds-instance
-	url = https://github.com/cfn-modules/rds-instance
