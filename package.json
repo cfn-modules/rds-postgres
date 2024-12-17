@@ -4,9 +4,6 @@
   "description": "RDS PostgreSQL database with secure firewall configuration, encryption, multi AZ, backup enabled, and alerting",
   "author": "Michael Wittig <michael@widdix.de>",
   "license": "Apache-2.0",
-  "bundledDependencies": [
-    "@cfn-modules/rds-instance"
-  ],
   "keywords": [
     "cfn-modules",
     "cfn-modules:ExposeName",
@@ -21,7 +18,7 @@
     "url": "https://github.com/cfn-modules/rds-postgres.git"
   },
   "dependencies": {
-    "@cfn-modules/rds-instance": "^1.5.0"
+    "@cfn-modules/rds-instance": "1.5.0"
   },
   "bundleDependencies": [
     "@cfn-modules/rds-instance"
