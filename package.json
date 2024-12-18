@@ -1,26 +1,26 @@
 {
-  "name": "@cfn-modules/rds-postgres",
-  "version": "2.4.2",
-  "description": "RDS PostgreSQL database with secure firewall configuration, encryption, multi AZ, backup enabled, and alerting",
   "author": "Michael Wittig <michael@widdix.de>",
-  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cfn-modules/rds-postgres/issues"
+  },
+  "bundledDependencies": [
+    "@cfn-modules/rds-instance"
+  ],
+  "dependencies": {
+    "@cfn-modules/rds-instance": "^1.5.0"
+  },
+  "description": "RDS PostgreSQL database with secure firewall configuration, encryption, multi AZ, backup enabled, and alerting",
+  "homepage": "https://github.com/cfn-modules",
   "keywords": [
     "cfn-modules",
     "cfn-modules:ExposeName",
     "cfn-modules:ExposeDnsName"
   ],
-  "homepage": "https://github.com/cfn-modules",
-  "bugs": {
-    "url": "https://github.com/cfn-modules/rds-postgres/issues"
-  },
+  "license": "Apache-2.0",
+  "name": "@cfn-modules/rds-postgres",
   "repository": {
     "type": "git",
     "url": "https://github.com/cfn-modules/rds-postgres.git"
   },
-  "dependencies": {
-    "@cfn-modules/rds-instance": "1.5.0"
-  },
-  "bundledDependencies": [
-    "@cfn-modules/rds-instance"
-  ]
+  "version": "2.4.2"
 }
