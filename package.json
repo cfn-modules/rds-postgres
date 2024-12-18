@@ -3,7 +3,7 @@
   "bugs": {
     "url": "https://github.com/cfn-modules/rds-postgres/issues"
   },
-  "bundledDependencies": [
+  "bundleDependencies": [
     "@cfn-modules/rds-instance"
   ],
   "dependencies": {
