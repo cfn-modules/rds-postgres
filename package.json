@@ -20,7 +20,7 @@
   "dependencies": {
     "@cfn-modules/rds-instance": "1.5.0"
   },
-  "bundleDependencies": [
+  "bundledDependencies": [
     "@cfn-modules/rds-instance"
   ]
 }
