@@ -92,6 +92,10 @@ Parameters:
     Type: String
     AllowedValues: ['true', 'false']
     Default: 'false'
+  ParameterGroupName:
+    Description: 'Optional name of parameter group to attach to.'
+    Type: String
+    Default: ''
 Resources:
   Instance:
     Type: 'AWS::CloudFormation::Stack'
@@ -114,6 +118,7 @@ Resources:
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
         DBMasterUsername: !Ref DBMasterUsername
         DBMasterUserPassword: !Ref DBMasterUserPassword
+        DBParameterGroupName: !Ref ParameterGroupName
         DBMultiAZ: !Ref DBMultiAZ
         SubDomainNameWithDot: !Ref SubDomainNameWithDot
         EnableIAMDatabaseAuthentication: !Ref EnableIAMDatabaseAuthentication
