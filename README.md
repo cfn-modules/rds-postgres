@@ -42,6 +42,8 @@ Resources:
         # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
         EngineVersion: '14.12'
         EnableIAMDatabaseAuthentication: 'false' # optional
+        CACertificateIdentifier: 'rds-ca-rsa2048-g1' # optional
+        CertificateRotationRestart: 'true' # optional
       TemplateURL: './node_modules/@cfn-modules/rds-postgres/module.yml'
 ```
 
@@ -194,6 +196,20 @@ Resources:
       <td>EnableIAMDatabaseAuthentication</td>
       <td>Enable <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html">mapping of AWS Identity and Access Management (IAM) accounts to database accounts</a>).</td>
       <td>false</td>
+      <td>no</td>
+      <td>[true, false]</td>
+    </tr>
+    <tr>
+      <td>CACertificateIdentifier</td>
+      <td>Certificate authority (CA) of the DB instance (e.g., rds-ca-rsa2048-g1). Leave blank to keep the RDS default.</td>
+      <td></td>
+      <td>no</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>CertificateRotationRestart</td>
+      <td>Specifies if the DB instance is restarted when the CA is changed (ignored if CACertificateIdentifier is blank).</td>
+      <td>true</td>
       <td>no</td>
       <td>[true, false]</td>
     </tr>

@@ -92,6 +92,15 @@ Parameters:
     Type: String
     AllowedValues: ['true', 'false']
     Default: 'false'
+  CACertificateIdentifier:
+    Description: 'Optional certificate authority (CA) of the DB instance (e.g., rds-ca-rsa2048-g1). Leave blank to keep the RDS default (no change on existing instances).'
+    Type: String
+    Default: ''
+  CertificateRotationRestart:
+    Description: 'Specifies if the DB instance is restarted when the CA is changed (ignored if CACertificateIdentifier is blank). Set to false to apply the new CA at the next reboot or maintenance window.'
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
 Resources:
   Instance:
     Type: 'AWS::CloudFormation::Stack'
@@ -117,12 +126,14 @@ Resources:
         DBMultiAZ: !Ref DBMultiAZ
         SubDomainNameWithDot: !Ref SubDomainNameWithDot
         EnableIAMDatabaseAuthentication: !Ref EnableIAMDatabaseAuthentication
+        CACertificateIdentifier: !Ref CACertificateIdentifier
+        CertificateRotationRestart: !Ref CertificateRotationRestart
       TemplateURL: './node_modules/@cfn-modules/rds-instance/module.yml'
 Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '2.4.5'
+    Value: '2.5.0'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:
