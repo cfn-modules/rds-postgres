@@ -133,7 +133,7 @@ Outputs:
   ModuleId:
     Value: 'rds-postgres'
   ModuleVersion:
-    Value: '2.5.0'
+    Value: '2.5.1'
   StackName:
     Value: !Ref 'AWS::StackName'
   Name:
