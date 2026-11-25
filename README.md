@@ -40,7 +40,7 @@ Resources:
         # Set this to the version of PostgreSQL you want to use.
         # You can run the following command to get the list of PostgreSQL versions supported by AWS RDS:
         # aws rds describe-db-engine-versions --engine postgres --query "DBEngineVersions[].EngineVersion"
-        EngineVersion: '14.12'
+        EngineVersion: '14.24'
         EnableIAMDatabaseAuthentication: 'false' # optional
         CACertificateIdentifier: 'rds-ca-rsa2048-g1' # optional
         CertificateRotationRestart: 'true' # optional
